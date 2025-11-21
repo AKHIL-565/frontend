@@ -84,10 +84,11 @@
 // };
 
 // export default Course;
+
 import React, { useEffect, useState } from 'react';
 import api from '../api/api';
 import { Link } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 
 const Course = () => {
   const [items, setItems] = useState([]);
@@ -97,42 +98,38 @@ const Course = () => {
   }, []);
 
   return (
-    <div style={{ padding: '135px' }} className="coursecls">
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '20px',
-          justifyContent: 'center',
-          textAlign: 'center'
-        }}
-      >
+    <Container style={{ paddingTop: '120px', paddingBottom: '40px' }}>
+      <Row className="g-4 justify-content-center">
         {items.map((item) => (
-          <Card key={item._id} style={{ width: '18rem' }}>
-            <Card.Img
-              variant="top"
-              src={item.image} // Cloudinary URL
-              onError={(e) => {
-                e.target.src =
-                  'https://via.placeholder.com/300x180?text=No+Image';
-              }}
-              style={{ height: '180px', objectFit: 'cover' }}
-            />
+          <Col key={item._id} xs={12} sm={6} md={4} lg={3}>
+            <Card className="h-100">
+              <Card.Img
+                variant="top"
+                src={item.image}
+                onError={(e) =>
+                  (e.target.src =
+                    'https://via.placeholder.com/300x180?text=No+Image')
+                }
+                style={{ height: '180px', objectFit: 'cover' }}
+              />
 
-            <Card.Body>
-              <Card.Title>{item.title}</Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Body className="d-flex flex-column">
+                <Card.Title>{item.title}</Card.Title>
+                <Card.Text>{item.description}</Card.Text>
 
-              <h4>₹{item.price}</h4>
+                <h4 className="mt-auto">₹{item.price}</h4>
 
-              <Link to={`/course/${item._id}`}>
-                <Button variant="primary">View Details</Button>
-              </Link>
-            </Card.Body>
-          </Card>
+                <Link to={`/course/${item._id}`}>
+                  <Button className="w-100 mt-3" variant="primary">
+                    View Details
+                  </Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 
